@@ -1,6 +1,41 @@
 import UIKit
 
-// MARK: Singleton Design Pattern
+// MARK: Section 4: System Design Fundamentals & Terminology
+
+// 시스템 내에서의 목적을 달성하기 위해서는 많은 객체 간에 의존성이 생깁니다.
+// 의존성이 생기는 경우, 객체의 변화에 대한 수정사항이 많이 발생할 수 있으므로 주의가 필요합니다.
+
+class Person {
+    var name: String
+
+    init(name: String) {
+        self.name = name
+    }
+
+    func eat() {
+        // Person은 IceCream에 대한 의존성이 생겼어요.
+        let iceCream = IceCream(flavour: "berry")
+        iceCream.finish()
+    }
+}
+
+class IceCream {
+    var flavour: String
+    // size 멤버와 생성자를 변경하는 순간, IceCream 생성자를 사용하는 모든곳이 변경이 필요해요. 🥲
+    // var size: Int
+
+    init(flavour: String) {
+        self.flavour = flavour
+    }
+
+    func finish() {
+        print("Icecream is completed...")
+    }
+}
+
+/*
+
+// MARK: Section 3: Singleton Design Pattern
 
 final class ColorPicker {
     var colors: [UIColor] = [.gray, .green, .red]
@@ -62,10 +97,11 @@ print("Testing Data Members")
 // global 하게 A에서 color를 추가하고, 추가한 color를 포함해서 다른 B 인스턴스에서 출력할 수 있다.
 a.addColor(color: .yellow)
 b.displayColors()
+*/
 
 /*
 
-// MARK: Prototype Design Pattern
+// MARK: Section 2: Prototype Design Pattern
 
 class Person {
     var name: String

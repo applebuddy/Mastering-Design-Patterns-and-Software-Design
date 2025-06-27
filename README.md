@@ -40,3 +40,13 @@ Mastering Design Patterns and Software Design
 - final 키워드
   - final 키워드를 사용하면, 해당 클래스는 서브클래스가 될 수 없다. 컴파일러가 해당 타입을 추론하기 쉬워짐
   - static dispatch 방식으로 사용 -> 컴파일러가 해당 클래스의 타입을 쉽게 추론할 수 있게하여 응용프로그램 성능 향상
+
+
+
+### Section 4: System Design Fundamentals & Terminology
+
+- 모든 시스템에는 종속성 그래프가 있습니다.
+- Dependency
+  - 시스템 목표를 달성하기 위해 객체 간에는 종속성이 존재합니다.
+  - ex) Person 클래스는 CreditCard 클래스 인스턴스 등을 하위 attributes로 갖고 있을 수 있습니다. Person 클래스의 역할을 수행하기 위해서는 CreditCard 클래스 인스턴스가 필요하므로 직접적인 의존성이 됩니다.
+
