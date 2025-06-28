@@ -59,3 +59,15 @@ Mastering Design Patterns and Software Design
   - 클래스들을 직접적으로 의존하지 마라
     - 클래스 구현체가 아닌 추상화한 프로토콜을 참조하는게 좋다. -> 유연성, 유지보수성, 확장성 이점을 볼 수 있다.
 
+
+
+### Section 5: Factory Design Pattern
+
+- Creational Design Pattern
+- Consumer Class는 Factory에 요청 -> Factory는 내부에서 생성 및 선택을 통해 instance를 반환
+- Factory Design Pattern의 장점
+  - 객체 생성 및 선택 로직을 가능한 caller 로부터 숨긴다.
+  - caller에게 단일 객체를 제공
+  - 객체 생성 로직의 확산 방지
+  - factory에 interface를 적용해서 의존성을 줄일 수 있음
+- 추후 다룰 abstract factory pattern과 깊은 연관이 있음
