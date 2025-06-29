@@ -116,3 +116,13 @@ print(myBurger.isSpicy)
 - 단일 객체만 사용하는 경우, Singleton Design Pattern을 사용해도 된다.
 - 두개 이상의 객체를 사용하는 경우, Object Pool Design Pattern 사용 가능
   - Singleton은 단일객체로만 관리한다면, Object Pool은 다수의 객체를 collection으로 관리
+
+
+
+### Section 9: Creational Patterns - Takeaway
+
+- Creational Patterns의 핵심은 컴포넌트 호출로부터 생성 로직을 숨기는 것
+- 구체적타입이 아닌, 추상화타입을 참조하도록 해서 객체간의 의존성을 줄인다.
+- 비싼 생성 비용을 줄이기 위해 노력한다.
+  - 존재하는 객체를 재사용할 수 있다.
+- 유연하고, 확장가능하고, 유지보수가능한 객체 관리가 되도록 노력한다.
