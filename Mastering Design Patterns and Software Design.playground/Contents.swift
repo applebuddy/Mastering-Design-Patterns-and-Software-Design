@@ -1,5 +1,73 @@
 import UIKit
 
+class Person {
+    var name: String
+    /// Mobile protocol 타입의 의존성을 갖는다. Apple, Samsung type 등이 될 수 있다. -> Person은 Mobile의 세부정보는 알 수 없어요.
+    var mobile: Mobile
+
+    init(name: String, mobile: Mobile) {
+        self.name = name
+        self.mobile = mobile
+    }
+}
+
+protocol Mobile {
+    var os: String { get }
+    var color: String { get }
+    var cost: Double { get }
+}
+
+class Apple: Mobile {
+    var os: String
+    var color: String
+    var cost: Double
+    
+    init(os: String, color: String, cost: Double) {
+        self.os = os
+        self.color = color
+        self.cost = cost
+    }
+}
+
+class Samsung: Mobile {
+    var os: String
+    var color: String
+    var cost: Double
+
+    init(os: String, color: String, cost: Double) {
+        self.os = os
+        self.color = color
+        self.cost = cost
+    }
+}
+
+enum Brand {
+    case Apple, Samsung
+}
+
+class MobileFactory {
+    // 사양에 따라 Mobile타입을 준수하는 구현체를 반환한다.
+    static func makeMobile(brand: Brand) -> Mobile? {
+        var mobile: Mobile?
+        switch brand {
+        case .Apple:
+            mobile = Apple(os: "iOS", color: "Zet Black", cost: 500000)
+        case .Samsung:
+            mobile = Samsung(os: "Android", color: "White", cost: 250000)
+        }
+
+        return mobile
+    }
+}
+
+let person: Person = .init(name: "Joe", mobile: MobileFactory.makeMobile(brand: .Apple)!)
+// person 인스턴스의 mobile은 프로토콜 타입으로 구체적인 타입을 알 수 없습니다. 이는 구체적인 타입의 변경에 대한 의존성을 줄여주고, Mobile 프로토콜만 준수하면 새로운 구현체도 추가할 수 있습니다. (확장성 증가)
+print(person.mobile.os)
+print(person.mobile.color)
+print(person.mobile.cost)
+
+/*
+
 // MARK: Section 4: System Design Fundamentals & Terminology
 
 // 시스템 내에서의 목적을 달성하기 위해서는 많은 객체 간에 의존성이 생깁니다.
@@ -32,6 +100,7 @@ class IceCream {
         print("Icecream is completed...")
     }
 }
+*/
 
 /*
 
