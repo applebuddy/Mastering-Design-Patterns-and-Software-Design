@@ -81,3 +81,28 @@ Mastering Design Patterns and Software Design
 
 
 ### Section 7: Builder Design Pattern (Creational)
+
+- 가장 쉽고 간단한 디자인 패턴 중의 하나
+- 생성으로 부터 객체의 설정을 분리한다.
+- 컴포넌트 호출로부터 객체 생성 로직을 숨깁니다.
+- 객체를 위한 default value를 쉽게 설정할 수 있다.
+- Builder는 초기 생성 시 default value로 설정된다.
+- Builder 생성 후, configuration 메서드로 추가 설정이 가능, Builder 설정 완료 후 인스턴스를 생성 가능
+
+```swift
+// Builder Pattern 객체 생성 및 사용 예시
+// 초기 생성시에는 하위 멤버 값이 default value로 설정된다.
+let burgerBuilder = BurderBuilder()
+
+// 필요에 따라 다른 멤버 값을 추가 변경
+burgerBuilder.set(toppings: false)
+burgerBuilder.set(ketchep: true)
+burgerBuilder.set(isVeg: false)
+burgerBuilder.set(isSpicy: true)
+burgerBuilder.set(cheese: false)
+
+let myBurger = burgerBuilder.buildBurder(name: "My Favorite Burger")
+print(myBurger.isVeg)
+print(myBurger.isSpicy)
+```
+

@@ -1,5 +1,77 @@
 import UIKit
 
+// MARK: Section 7: Builder Pattern Implementation
+
+class Burger {
+    var name: String
+    var toppings: Bool
+    var ketchep: Bool
+    var isVeg: Bool
+    var isSpicy: Bool
+    var cheese: Bool
+
+    init(name: String, toppings: Bool, ketchep: Bool, isVeg: Bool, isSpicy: Bool, cheese: Bool) {
+        self.name = name
+        self.toppings = toppings
+        self.ketchep = ketchep
+        self.isVeg = isVeg
+        self.isSpicy = isSpicy
+        self.cheese = cheese
+    }
+}
+
+let burger = Burger(name: "My Favorite", toppings: true, ketchep: false, isVeg: true, isSpicy: false, cheese: true)
+
+class BurderBuilder {
+    // default values
+    var toppings: Bool = true
+    var ketchep: Bool = true
+    var isVeg: Bool = true
+    var isSpicy: Bool = false
+    var cheese: Bool = true
+
+    func set(toppings: Bool) {
+        self.toppings = toppings
+    }
+
+    func set(ketchep: Bool) {
+        self.ketchep = ketchep
+    }
+
+    func set(isVeg: Bool) {
+        self.isVeg = isVeg
+    }
+
+    func set(isSpicy: Bool) {
+        self.isSpicy = isSpicy
+    }
+
+    func set(cheese: Bool) {
+        self.cheese = cheese
+    }
+
+    func buildBurder(name: String) -> Burger {
+        return Burger(name: name, toppings: self.toppings, ketchep: self.ketchep, isVeg: self.isVeg, isSpicy: self.isSpicy, cheese: self.cheese)
+    }
+}
+
+// Builder Pattern 객체 생성 및 사용 예시
+// 초기 생성시에는 하위 멤버 값이 default value로 설정된다.
+let burgerBuilder = BurderBuilder()
+
+// 필요에 따라 다른 멤버 값을 추가 변경
+burgerBuilder.set(toppings: false)
+burgerBuilder.set(ketchep: true)
+burgerBuilder.set(isVeg: false)
+burgerBuilder.set(isSpicy: true)
+burgerBuilder.set(cheese: false)
+
+let myBurger = burgerBuilder.buildBurder(name: "My Favorite Burger")
+print(myBurger.isVeg)
+print(myBurger.isSpicy)
+
+/*
+
 // MARK: Section 6: Abstract Factory Design Pattern (Creational Design Pattern)
 
 class Computer {
@@ -151,6 +223,7 @@ if let factory = ComputerFactory.makeComputerFactory(specification: .basic) {
     print(computer.gpu.speed)
     print(computer.display.resolution)
 }
+*/
 
 /*
 
