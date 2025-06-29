@@ -106,3 +106,13 @@ print(myBurger.isVeg)
 print(myBurger.isSpicy)
 ```
 
+
+
+### Section 8: Object Pool Design Pattern (Creational)
+
+- 이미 존재하는 객체는 재사용함으로서 객체들의 비싼 초기화 비용을 피한다.
+- 컴포넌트 호출로부터 생성로직을 숨긴다. (기존에 존재하는 경우, 해당 인스턴스를 재사용)
+- 실세계 자원 컬렉션을 표현한다.
+- 단일 객체만 사용하는 경우, Singleton Design Pattern을 사용해도 된다.
+- 두개 이상의 객체를 사용하는 경우, Object Pool Design Pattern 사용 가능
+  - Singleton은 단일객체로만 관리한다면, Object Pool은 다수의 객체를 collection으로 관리

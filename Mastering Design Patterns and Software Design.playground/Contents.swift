@@ -1,6 +1,55 @@
 import UIKit
 
-// MARK: Section 7: Builder Pattern Implementation
+// MARK: Section 8: Object Pool Design Pattern (Creational)
+
+class Book {
+    var title: String
+    var author: String
+
+    init(title: String, author: String) {
+        self.title = title
+        self.author = author
+    }
+}
+
+// BookPool은 통해 Book을 관리하고, 재사용한다. 재사용으로 비싼 초기화 비용을 줄이고, 유연성을 올린다.
+class BookPool {
+    var books: [Book]
+
+    init(books: [Book]) {
+        self.books = books
+    }
+
+    // 기존에 있는 인스턴스를 반환, 생성로직을 숨긴다.
+    func getBook() -> Book? {
+        if books.isEmpty {
+            print("Pool is empty")
+            return nil
+        }
+        print("Book has given.")
+        return books.removeFirst()
+    }
+
+    func returnBook(book: Book) {
+        books.append(book)
+    }
+}
+
+let bookPool = BookPool(books: [Book(title: "Book of Life", author: "EI"), Book(title: "Book of Love", author: "AB"), Book(title: "Book of Death", author: "CD")])
+// bookPool에 책이 존재하면 첫번째 책을 빼내어서(removeFirst) 반환, 없으면 nil 반환
+let book1 = bookPool.getBook()
+let book2 = bookPool.getBook()
+let book3 = bookPool.getBook()
+let book4 = bookPool.getBook() // 더이상 book이 없으므로 nil 반환
+
+// returnBook으로 특정 Book 인스턴스를 pool에 추가해서 관리할 수 있다.
+bookPool.returnBook(book: book1!) // book1을 pool에 재추가
+let book5 = bookPool.getBook() // book5는 기존의 book1 인스턴스를 받는다.
+let book6 = bookPool.getBook() // 다시 book이 pool에 없으므로, nil 반환
+
+/*
+
+// MARK: Section 7: Builder Pattern Implementation (Creational)
 
 class Burger {
     var name: String
@@ -69,6 +118,7 @@ burgerBuilder.set(cheese: false)
 let myBurger = burgerBuilder.buildBurder(name: "My Favorite Burger")
 print(myBurger.isVeg)
 print(myBurger.isSpicy)
+*/
 
 /*
 
