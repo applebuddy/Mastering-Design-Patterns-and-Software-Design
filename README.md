@@ -9,7 +9,7 @@ Mastering Design Patterns and Software Design
   - structural : proxy pattern
   - behavioral : observer pattern, responsibility pattern
 
-## Section 2: Prototype Design Pattern
+## Section 2: Prototype Design Pattern (Creational)
 
 - Prototype Design Pattern은 Creational Design Pattern에 속합니다.
 - 기존 객체의 멤버를 활용해서 새로운 객체를 생성 가능
@@ -27,7 +27,7 @@ Mastering Design Patterns and Software Design
 
 
 
-## Section 3: Singleton Design Pattern
+## Section 3: Singleton Design Pattern (Creational)
 
 - Creational Design Pattern
 - class가 오직 단 하나만 생성되도록 제한
@@ -61,7 +61,7 @@ Mastering Design Patterns and Software Design
 
 
 
-### Section 5: Factory Design Pattern
+### Section 5: Factory Design Pattern (Creational)
 
 - Creational Design Pattern
 - Consumer Class는 Factory에 요청 -> Factory는 내부에서 생성 및 선택을 통해 instance를 반환
@@ -71,3 +71,13 @@ Mastering Design Patterns and Software Design
   - 객체 생성 로직의 확산 방지
   - factory에 interface를 적용해서 의존성을 줄일 수 있음
 - 추후 다룰 abstract factory pattern과 깊은 연관이 있음
+
+
+
+### Section 6: Abstract Factory Design Pattern (Creational)
+
+- Playground 코드 참고
+
+
+
+### Section 7: Builder Design Pattern (Creational)

@@ -1,5 +1,161 @@
 import UIKit
 
+// MARK: Section 6: Abstract Factory Design Pattern (Creational Design Pattern)
+
+class Computer {
+    var cpu: any CPU
+    var gpu: any GPU
+    var display: any Display
+
+    init(cpu: any CPU, gpu: any GPU, display: any Display) {
+        self.cpu = cpu
+        self.gpu = gpu
+        self.display = display
+    }
+}
+
+protocol CPU {
+    var cores: Int { get }
+}
+
+protocol GPU {
+    var speed: Int { get }
+}
+
+protocol Display {
+    var resolution: Int { get }
+}
+
+// CPU Concreate Implementations
+
+class BasicCPU: CPU {
+    var cores: Int = 2
+}
+
+class StandardCPU: CPU {
+    var cores: Int = 4
+}
+
+class AdvancedCPU: CPU {
+    var cores: Int = 8
+}
+
+// GPU Concrete Implementations
+
+class BasicGPU: GPU {
+    var speed: Int = 1000
+}
+
+class StandardGPU: GPU {
+    var speed: Int = 5000
+}
+
+class AdvancedGPU: GPU {
+    var speed: Int = 10000
+}
+
+// Display Concreate Implementations
+
+class BasicDisplay: Display {
+    var resolution: Int = 100
+}
+
+class StandardDisplay: Display {
+    var resolution: Int = 500
+}
+
+class AdvancedDisplay: Display {
+    var resolution: Int = 1000
+}
+
+enum Specification {
+    case basic, standard, advanced
+}
+
+class ComputerFactory {
+    func createCPU() -> CPU {
+        fatalError("Not Implemented.")
+    }
+
+    func createGPU() -> GPU {
+        fatalError("Not Implemented.")
+    }
+
+    func createDisplay() -> Display {
+        fatalError("Not Implemented.")
+    }
+
+    static func makeComputerFactory(specification: Specification) -> ComputerFactory? {
+        var factory: ComputerFactory?
+
+        switch specification {
+        case .basic:
+            factory = BasicComputerFactory()
+        case .standard:
+            factory = StandardComputerFactory()
+        case .advanced:
+            factory = AdvancedComputerFactory()
+        }
+
+        return factory
+    }
+}
+
+class BasicComputerFactory: ComputerFactory {
+    override func createCPU() -> CPU {
+        BasicCPU()
+    }
+
+    override func createGPU() -> GPU {
+        BasicGPU()
+    }
+
+    override func createDisplay() -> Display {
+        BasicDisplay()
+    }
+}
+
+class StandardComputerFactory: ComputerFactory {
+    override func createCPU() -> CPU {
+        StandardCPU()
+    }
+
+    override func createGPU() -> GPU {
+        StandardGPU()
+    }
+
+    override func createDisplay() -> Display {
+        StandardDisplay()
+    }
+}
+
+class AdvancedComputerFactory: ComputerFactory {
+    override func createCPU() -> CPU {
+        AdvancedCPU()
+    }
+
+    override func createGPU() -> GPU {
+        AdvancedGPU()
+    }
+
+    override func createDisplay() -> Display {
+        AdvancedDisplay()
+    }
+}
+
+if let factory = ComputerFactory.makeComputerFactory(specification: .basic) {
+    // enum case에 맞는 Factory를 이용해 그에 맞는 Computer 생성
+    let computer = Computer(cpu: factory.createCPU(), gpu: factory.createGPU(), display: factory.createDisplay())
+
+    print(computer.cpu.cores)
+    print(computer.gpu.speed)
+    print(computer.display.resolution)
+}
+
+/*
+
+// MARK: Section 5: Factory Design Pattern (Creational Design Pattern)
+
 class Person {
     var name: String
     /// Mobile protocol 타입의 의존성을 갖는다. Apple, Samsung type 등이 될 수 있다. -> Person은 Mobile의 세부정보는 알 수 없어요.
@@ -65,6 +221,7 @@ let person: Person = .init(name: "Joe", mobile: MobileFactory.makeMobile(brand: 
 print(person.mobile.os)
 print(person.mobile.color)
 print(person.mobile.cost)
+*/
 
 /*
 
