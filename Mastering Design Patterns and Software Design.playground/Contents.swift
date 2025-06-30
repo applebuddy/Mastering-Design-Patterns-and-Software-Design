@@ -1,5 +1,90 @@
 import UIKit
 
+// MARK: Section 10: Adapter Pattern (Structural)
+
+protocol BasicMobile {
+    func initiateCall()
+    func disconnectCall()
+}
+
+// BasicMobile을 채택하는 Nokia
+class Nokia: BasicMobile {
+    func initiateCall() {
+        print("Call initiated...")
+    }
+
+    func disconnectCall() {
+        print("Call disconnected...")
+    }
+}
+
+protocol SmartMobile {
+    func startCall()
+    func stopCall()
+    func capturePhoto()
+    func captureVideo()
+}
+
+// SmartMobile을 채택하는 IPhone
+class IPhone: SmartMobile {
+    func startCall() {
+        print("Call started...")
+    }
+    
+    func stopCall() {
+        print("Call stopped...")
+    }
+    
+    func capturePhoto() {
+        print("Capturing Photo...")
+    }
+    
+    func captureVideo() {
+        print("Capturing Video...")
+    }
+}
+
+// BasicMobile 타입을 받아서 SmartMobile 타입으로 사용할 수 있도록 해주는 Adapter
+class SmartAdapter: SmartMobile {
+    var basicMobile: BasicMobile
+
+    init(basicMobile: BasicMobile) {
+        self.basicMobile = basicMobile
+    }
+
+    func startCall() {
+        self.basicMobile.initiateCall()
+    }
+
+    func stopCall() {
+        self.basicMobile.disconnectCall()
+    }
+
+    func capturePhoto() {
+        print("Doesnt support Photo feature")
+    }
+
+    func captureVideo() {
+        print("Doesnt support Video feature")
+    }
+}
+
+// 1) SmartAdapter가 없는 경우
+// let basicMobile: BasicMobile = Nokia()
+// basicMobile은 SmartMobile을 채택하지 않았으므로, 아래 컴파일 에러 발생
+// let smartMobile: SmartMobile = basicMobile
+
+// 2) SmartAdapter가 있는 경우
+let basicMobile: BasicMobile = Nokia()
+// Adapter로 SmartMobile 인스턴스로 변환하여 사용 가능
+let smartMobile: SmartMobile = SmartAdapter(basicMobile: basicMobile)
+smartMobile.startCall()
+smartMobile.stopCall()
+smartMobile.captureVideo()
+smartMobile.capturePhoto()
+
+/*
+
 // MARK: Section 8: Object Pool Design Pattern (Creational)
 
 class Book {
@@ -46,6 +131,7 @@ let book4 = bookPool.getBook() // 더이상 book이 없으므로 nil 반환
 bookPool.returnBook(book: book1!) // book1을 pool에 재추가
 let book5 = bookPool.getBook() // book5는 기존의 book1 인스턴스를 받는다.
 let book6 = bookPool.getBook() // 다시 book이 pool에 없으므로, nil 반환
+*/
 
 /*
 
