@@ -1,5 +1,134 @@
 import UIKit
 
+// MARK: Section 11: Bridge Pattern (Structural)
+
+protocol TV {
+    var remote: Remote { get }
+    func on()
+    func off()
+}
+
+class SonyTV: TV {
+    var remote: any Remote
+
+    init(remote: any Remote) {
+        self.remote = remote
+    }
+
+    func on() {
+        print("\(String(describing: Self.self)) on")
+    }
+
+    func off() {
+        print("\(String(describing: Self.self)) off")
+    }
+}
+
+class SamsungTV: TV {
+    var remote: any Remote
+
+    init(remote: any Remote) {
+        self.remote = remote
+    }
+
+    func on() {
+        print("\(String(describing: Self.self)) on")
+    }
+
+    func off() {
+        print("\(String(describing: Self.self)) off")
+    }
+}
+
+protocol Remote {
+    func increaseVolume()
+    func decreaseVolume()
+    func on()
+    func off()
+}
+
+class BasicRemote: Remote {
+    func increaseVolume() {
+        print("Volume increased...")
+    }
+    
+    func decreaseVolume() {
+        print("Volume decreased...")
+    }
+    
+    func on() {
+        print("TV on from \(String(describing: Self.self))")
+    }
+    
+    func off() {
+        print("TV off from \(String(describing: Self.self))")
+    }
+}
+
+class AdvancedRemote: Remote {
+    func increaseVolume() {
+        print("Volume increased...")
+    }
+
+    func decreaseVolume() {
+        print("Volume decreased...")
+    }
+
+    func on() {
+        print("TV on from \(String(describing: Self.self))")
+    }
+
+    func off() {
+        print("TV off from \(String(describing: Self.self))")
+    }
+
+    func channelUp() {
+        print("Channel Up")
+    }
+
+    func channelDown() {
+        print("Channel Down")
+    }
+}
+
+// 새로 추가한 Remote를 준수하는 SmartRemote
+class SmartRemote: Remote {
+    func increaseVolume() {
+        print("Volume increased...")
+    }
+
+    func decreaseVolume() {
+        print("Volume decreased...")
+    }
+
+    func on() {
+        print("TV on from \(String(describing: Self.self))")
+    }
+
+    func off() {
+        print("TV off from \(String(describing: Self.self))")
+    }
+
+    func channelUp() {
+        print("Channel Up")
+    }
+
+    func channelDown() {
+        print("Channel Down")
+    }
+}
+
+// let tv: TV = SonyTV(remote: SmartRemote())
+let tv: TV = SamsungTV(remote: SmartRemote())
+// 1) Remote 를 준수하는 구현체 종류에 따라 on, off 출력값이 다름
+// 2) Remote를 준수하는 클래스를 추가하는 방식으로 확장이 가능
+// -> 상속 대신, 프로토콜을 활용한 컴포지션을 사용하면 보다 유연한 확장이 가능
+tv.remote.on()
+tv.remote.off()
+
+
+/*
+
 // MARK: Section 10: Adapter Pattern (Structural)
 
 protocol BasicMobile {
@@ -82,6 +211,8 @@ smartMobile.startCall()
 smartMobile.stopCall()
 smartMobile.captureVideo()
 smartMobile.capturePhoto()
+
+*/
 
 /*
 

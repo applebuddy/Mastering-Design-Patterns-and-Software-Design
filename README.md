@@ -135,3 +135,12 @@ print(myBurger.isSpicy)
 - 두개의 적합하지 않은 인터페이스들을 같이 동작하도록 허용해줍니다.
 - 기존 코드를 변경해서는 안될때 사용될 수 있다.
 - 기존 코드 변경 없이 인터페이스들을 유연하게 동작하도록 할때 사용될 수 있다.
+
+
+
+### Section 11: Bridge Design Pattern (Structural)
+
+- Bridge Design Pattern은 추상화(Abstraction)를 구현체(Implementation)로부터 분리하여, 유연하게 확장할 수 있도록 하는 구조
+- Exploding class hierachies(상속의 .. 상속이 생기는 것)라는 공통 상속 설계 문제를 해결할 수 있다.
+- protocol을 사용한 컴포지션 (composition)이 (상속)inheritence보다 선호됩니다.
+  - 컴포지션은 has a 관계, 상속은 is a 관계
