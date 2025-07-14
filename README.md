@@ -144,3 +144,13 @@ print(myBurger.isSpicy)
 - Exploding class hierachies(상속의 .. 상속이 생기는 것)라는 공통 상속 설계 문제를 해결할 수 있다.
 - protocol을 사용한 컴포지션 (composition)이 (상속)inheritence보다 선호됩니다.
   - 컴포지션은 has a 관계, 상속은 is a 관계
+
+
+
+### Section 12: Composite Design Pattern (Structural)
+
+- Composite Design Pattern은 트리 계층의 표현과 관리가 쉽고 유연한 장점이 있다.
+- 단순하고, 유연한 방식으로 트리 계층을 생성하도록 해준다.
+- 트리 내에서 두가지 타입의 객체가 존재한다. (Leaf or Composite)
+- Leaf 객체는 individual, part노드 로도 불린다.
+- Composite 객체는 collection, whole노드로도 불린다.

@@ -1,5 +1,107 @@
 import UIKit
 
+// MARK: Section 12: Composite Pattern (Structural)
+// 트리구조 내 Composite, Leaf 객체로 구성된다.
+
+protocol CarPart {
+    var name: String { get }
+    var price: Double { get }
+}
+
+class IndividualPart: CarPart {
+    var name: String
+    var price: Double
+
+    init(name: String, price: Double) {
+        self.name = name
+        self.price = price
+    }
+}
+
+class CompositePart: CarPart {
+    var name: String
+    var price: Double {
+        return parts.reduce(0) { $0 + $1.price }
+    }
+    var parts: [CarPart] = []
+    
+    init(name: String, parts: [CarPart]) {
+        self.name = name
+        self.parts = parts
+    }
+
+    func addPart(_ part: CarPart) {
+        parts.append(part)
+    }
+
+    func removePart(_ part: CarPart) {
+        for index in parts.indices
+        where parts[index].name == part.name {
+            parts.remove(at: index)
+        }
+    }
+}
+
+class Customer {
+    var name: String
+    var parts: [CarPart]
+
+    var totalOrderPrice: Double {
+        return parts.reduce(0) { $0 + $1.price }
+    }
+
+    init(name: String, parts: [CarPart]) {
+        self.name = name
+        self.parts = parts
+    }
+
+    // Composite, Leaf object 모두 CarPart 를 준수한 상태로 트리구조의 처리가 가능
+    func printOrderDetails() {
+        print("These are the Part prices")
+        for part in parts {
+            print("name: \(part.name), price: \(part.price)")
+        }
+        print("Total Order Price is \(totalOrderPrice)")
+    }
+}
+
+let windowDoor: CompositePart = CompositePart(
+    name: "Window Door",
+    parts: [
+        IndividualPart(name: "Window Glass", price: 1000),
+        IndividualPart(name: "Switch", price: 500),
+    ]
+)
+
+let door: CompositePart = CompositePart(
+    name: "Door",
+    parts: [
+        windowDoor,
+        IndividualPart(name: "Handler", price: 300)
+    ]
+)
+let seatCover: CarPart = IndividualPart(name: "Seat Cover", price: 2000)
+
+let customer = Customer(
+    name: "Joe",
+    parts: [
+        door,
+        seatCover
+    ]
+)
+
+// customer 내 leaf들 price 정보 출력 Composite, Leaf 모두 CarPart를 준수하며, 트리구조로 관리 됨
+customer.printOrderDetails()
+
+// Output example)
+// These are the Part prices
+// name: Door, price: 1800.0
+// name: Seat Cover, price: 2000.0
+// Total Order Price is 3800.0
+
+
+/*
+
 // MARK: Section 11: Bridge Pattern (Structural)
 
 protocol TV {
@@ -125,7 +227,7 @@ let tv: TV = SamsungTV(remote: SmartRemote())
 // -> 상속 대신, 프로토콜을 활용한 컴포지션을 사용하면 보다 유연한 확장이 가능
 tv.remote.on()
 tv.remote.off()
-
+*/
 
 /*
 
