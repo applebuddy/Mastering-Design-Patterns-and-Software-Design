@@ -1,5 +1,114 @@
 import UIKit
 
+// MARK: Section 13: Proxy Pattern (Structural)
+
+protocol AppFeature {
+    func upload()
+    func download()
+    func post()
+    func comment()
+}
+
+/// 응용 프로그램 클래스
+class Application: AppFeature {
+    func upload() {
+        print("Upload successful")
+    }
+    
+    func download() {
+        print("Download successful")
+    }
+    
+    func post() {
+        print("Post successful")
+    }
+    
+    func comment() {
+        print("Comment successful")
+    }
+}
+
+protocol ApplicationProxyProtocol {
+    func upload(user: User)
+    func download(user: User)
+    func post(user: User)
+    func comment(user: User)
+}
+
+class ApplicationProxy: ApplicationProxyProtocol {
+    // application 에 접근하기 위해서는 ApplicationProxy를 거쳐야만 합니다.
+    // 권한이 있는 경우에만 접근 및 사용이 가능할 수 있습니다.
+    private let application: Application = Application()
+
+    func upload(user: User) {
+        if user.permissions.contains("upload") {
+            application.upload()
+        } else {
+            print("No upload permission")
+        }
+    }
+
+    func download(user: User) {
+        if user.permissions.contains("download") {
+            application.download()
+        } else {
+            print("No download permission")
+        }
+    }
+
+    func post(user: User) {
+        if user.permissions.contains(("post")) {
+            application.post()
+        } else {
+            print("No post permission")
+        }
+    }
+
+    func comment(user: User) {
+        if user.permissions.contains("comment") {
+            application.comment()
+        } else {
+            print("No comment permission")
+        }
+    }
+}
+
+class User {
+    var name: String
+    /// 유저의 권한에 맞게 proxy를 통해 application 접근이 가능
+    var permissions: [String]
+    var applicationProxy: ApplicationProxyProtocol = ApplicationProxy()
+
+    init(name: String, permissions: [String]) {
+        self.name = name
+        self.permissions = permissions
+    }
+
+    func performUpload() {
+        applicationProxy.upload(user: self)
+    }
+
+    func performDownload() {
+        applicationProxy.download(user: self)
+    }
+
+    func post() {
+        applicationProxy.post(user: self)
+    }
+
+    func comment() {
+        applicationProxy.comment(user: self)
+    }
+}
+
+let user: User = User(name: "Min", permissions: ["upload", "download"])
+user.performUpload() // upload 가능
+user.performDownload() // download 가능
+user.post() // post 권한 없어서 접근 불가
+user.comment() // comment 권한 없어서 접근 불가
+
+/*
+
 // MARK: Section 12: Composite Pattern (Structural)
 // 트리구조 내 Composite, Leaf 객체로 구성된다.
 
@@ -99,6 +208,7 @@ customer.printOrderDetails()
 // name: Seat Cover, price: 2000.0
 // Total Order Price is 3800.0
 
+ */
 
 /*
 

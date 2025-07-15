@@ -154,3 +154,14 @@ print(myBurger.isSpicy)
 - 트리 내에서 두가지 타입의 객체가 존재한다. (Leaf or Composite)
 - Leaf 객체는 individual, part노드 로도 불린다.
 - Composite 객체는 collection, whole노드로도 불린다.
+
+
+
+### Section 13: Proxy (Structural)
+
+- Proxy Design Pattern은 실제 자원을 호출자로부터 숨깁니다.
+- 호출자는 Proxy를 사용하며, Proxy가 실제 자원에 대한 호출자 요청 대리자를 수행합니다.
+- |Caller| -- (Uses) --> |Proxy| -- (Delegates) --> Resource
+  - 호출자는 실제 자원에 대해서 알 수 없습니다. Proxy가 대신 실제 자원에 요청하기 때문
+- Proxy에 추상화를 적용하여 커플링을 완화하고 실제 자원에 수정사항이 발생해도 호출자에게 영향을 주지 않습니다.
+- Proxy는 caller의 권한에 때라 요청을 제한할 수도 있습니다.
