@@ -165,3 +165,12 @@ print(myBurger.isSpicy)
   - 호출자는 실제 자원에 대해서 알 수 없습니다. Proxy가 대신 실제 자원에 요청하기 때문
 - Proxy에 추상화를 적용하여 커플링을 완화하고 실제 자원에 수정사항이 발생해도 호출자에게 영향을 주지 않습니다.
 - Proxy는 caller의 권한에 때라 요청을 제한할 수도 있습니다.
+
+
+
+### Section 14: Facade (Structural)
+
+- 소비자들에게 단순화된 API를 제공하며 의존성들의 복잡성을 숨기는 것
+- 소비자들은 실질적 요구 동작 실행을 위해  Facade를 사용
+- caller는 facade design pattern을 사용, facade는 내부적으로 class A, B, C를 사용
+- calling components 와의 커플링을 줄임

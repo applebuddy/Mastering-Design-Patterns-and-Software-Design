@@ -1,6 +1,73 @@
 import UIKit
 
-// MARK: Section 13: Proxy Pattern (Structural)
+// MARK: Section 14: Facade Design Pattern (Structural)
+
+protocol Shape {
+    func draw()
+}
+
+class Circle: Shape {
+    func draw() {
+        print("Circle drawn...")
+    }
+}
+
+class Square: Shape {
+    func draw() {
+        print("Square drawn...")
+    }
+}
+
+class Rectangle: Shape {
+    func draw() {
+        print("Rectangle Drawn...")
+    }
+}
+
+class ShapeFacade {
+    private var circle: Shape = Circle()
+    private var square: Shape = Square()
+    private var rectangle: Shape = Rectangle()
+
+    func drawCircle() {
+        circle.draw()
+    }
+
+    func drawRetangle() {
+        rectangle.draw()
+    }
+
+    func drawSquare() {
+        square.draw()
+    }
+}
+
+// ShapeMaker는 circle, rectangle, square 등의 클래스에 대한 직접적인 의존성을 갖지 않습니다.
+class ShapeMaker {
+    /// facade 내에서 circle, square, rectangle 등의 클래스 호출을 관리
+    var shapeFacade: ShapeFacade = ShapeFacade()
+
+    func drawCircle() {
+        shapeFacade.drawCircle()
+    }
+
+    func drawRetangle() {
+        shapeFacade.drawRetangle()
+    }
+
+    func drawSquare() {
+        shapeFacade.drawSquare()
+    }
+}
+
+let maker = ShapeMaker()
+maker.drawCircle()
+maker.drawSquare()
+maker.drawRetangle()
+
+/*
+
+// MARK: Section 13: Proxy Design Pattern (Structural)
 
 protocol AppFeature {
     func upload()
@@ -106,6 +173,7 @@ user.performUpload() // upload 가능
 user.performDownload() // download 가능
 user.post() // post 권한 없어서 접근 불가
 user.comment() // comment 권한 없어서 접근 불가
+*/
 
 /*
 
