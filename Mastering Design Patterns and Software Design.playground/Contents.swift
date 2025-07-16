@@ -1,5 +1,78 @@
 import UIKit
 
+// MARK: Section 15: Decorator Design Pattern (Structural)
+
+protocol Dress {
+    func assemble()
+}
+
+class BasicDress: Dress {
+    func assemble() {
+        print("Basic dress features")
+    }
+}
+
+/// Decorator 부모클래스
+class DressDecorator: Dress {
+    var dress: Dress
+
+    init(dress: Dress) {
+        self.dress = dress
+    }
+
+    func assemble() {
+        dress.assemble()
+    }
+}
+
+class CasualDress: DressDecorator {
+    override init(dress: any Dress) {
+        super.init(dress: dress)
+    }
+
+    override func assemble() {
+        super.assemble()
+        print("Casual Dress Features")
+    }
+}
+
+class FancyDress: DressDecorator {
+    override init(dress: any Dress) {
+        super.init(dress: dress)
+    }
+
+    override func assemble() {
+        super.assemble()
+        print("Fancy Dress Features")
+    }
+}
+
+class SportyDress: DressDecorator {
+    override init(dress: any Dress) {
+        super.init(dress: dress)
+    }
+
+    override func assemble() {
+        super.assemble()
+        print("Sporty Dress Features")
+    }
+}
+
+// let fancySporty: Dress = FancyDress(dress: SportyDress(dress: BasicDress()))
+// fancySporty.assemble()
+
+// 아래와 같이 mix and match, 여러 Decorator 조합을 포함한 인스턴스 생성이 가능
+// BasicDress -> SportyDress -> FancyDress 순으로 assemble 메서드가 호출
+let casualSporty: Dress = CasualDress(dress: SportyDress(dress: BasicDress()))
+casualSporty.assemble()
+
+// output example
+// Basic dress features
+// Sporty Dress Features
+// Casual Dress Features
+
+/*
+
 // MARK: Section 14: Facade Design Pattern (Structural)
 
 protocol Shape {
@@ -64,6 +137,8 @@ let maker = ShapeMaker()
 maker.drawCircle()
 maker.drawSquare()
 maker.drawRetangle()
+
+*/
 
 /*
 

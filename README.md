@@ -174,3 +174,13 @@ print(myBurger.isSpicy)
 - 소비자들은 실질적 요구 동작 실행을 위해  Facade를 사용
 - caller는 facade design pattern을 사용, facade는 내부적으로 class A, B, C를 사용
 - calling components 와의 커플링을 줄임
+
+
+
+### Section 15: Decorator Design Pattern (Structural)
+
+- 런타임에 클래스 변경 없이 객체에 행위들을 추가하는것을 허용해준다.
+  - 동일한 프로토콜을 채택한 객체들을 생성자에 주입 -> 정의된 메서드 호출을 통해 mix and match 동작
+  - mix and match : **여러 기능(데코레이터)을 조합해서 객체에 유연하게 기능을 추가**할 수 있다는 의미
+- 행위 추가가 쉽다.
+- 일반 상속에 비해서 유연합니다.
