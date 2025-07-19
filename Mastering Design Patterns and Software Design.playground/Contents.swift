@@ -1,5 +1,110 @@
 import UIKit
 
+// MARK: Section 16: FlyWeight Design Pattern (Structural)
+
+protocol Pen {
+    var brush: String { get }
+    var color: String { get }
+
+    func draw(content: String, color: String)
+}
+
+// 아래 Pen protocol을 채택한 3개 구현체는 FlyWeight Object입니다.
+
+class ThickPen: Pen {
+    // intrinsic state, 내부 고정 상태
+    var brush: String = "Thick"
+
+    var color: String
+
+    init(color: String) {
+        // extrinsic state, 외부에서 주입되는 가변 상태
+        self.color = color
+    }
+
+    func draw(content: String, color: String) {
+        print("Drawing content \(content) in \(color)")
+    }
+}
+
+class ThinPen: Pen {
+    var brush: String = "Thin"
+
+    var color: String
+
+    init(color: String) {
+        self.color = color
+    }
+
+    func draw(content: String, color: String) {
+        print("Drawing content \(content) in \(color)")
+    }
+}
+
+class MediumPen: Pen {
+    var brush: String = "Medium"
+
+    var color: String
+
+    init(color: String) {
+        self.color = color
+    }
+
+    func draw(content: String, color: String) {
+        print("Drawing content \(content) in \(color)")
+    }
+}
+
+class PenFactory {
+    nonisolated(unsafe) static var cache: [String: Pen] = [:]
+
+    // 다수의 호출이 있어도, 이미 존재하는 Pen은 단 한번만 생성 및 캐싱 후 사용됩니다.
+    static func getPen(brush: String, color: String) -> Pen {
+        let key = "\(brush)-\(color)"
+        if let pen = PenFactory.cache[key] {
+            // 이미 존재하는 pen이면, 기존 캐시의 pen을 사용
+            print("Returning the existing Pen from cache")
+            return pen
+        } else {
+            // 없는 pen은 생성 후, 캐싱 및 반환
+            print("Creating a new Pen with brush \(brush) and color \(color)")
+
+            let pen: Pen = switch brush {
+            case "Thick":
+                ThickPen(color: color)
+            case "Thin":
+                ThinPen(color: color)
+            case "Medium":
+                MediumPen(color: color)
+            default:
+                fatalError("There is no such brush implementation")
+            }
+
+            cache[key] = pen
+            return pen
+        }
+    }
+}
+
+// brush, color 가 같은 객체는 2개 이상 생성되지 않음
+let pen: Pen = PenFactory.getPen(brush: "Thick", color: "Red")
+let samePen: Pen = PenFactory.getPen(brush: "Thick", color: "Red")
+
+let yelloThinPen: Pen = PenFactory.getPen(brush: "Thin", color: "Yellow")
+let yelloThickPen: Pen = PenFactory.getPen(brush: "Thick", color: "Yellow")
+let sameYelloThickPen: Pen = PenFactory.getPen(brush: "Thick", color: "Yellow")
+sameYelloThickPen.draw(content: "Hello World", color: "Yellow")
+
+// - Output Example
+// Creating a new Pen with brush Thick and color Red
+// Returning the existing Pen from cache
+// Creating a new Pen with brush Thin and color Yellow
+// Creating a new Pen with brush Thick and color Yellow
+// Returning the existing Pen from cache
+// Drawing content Hello World in Yellow
+
+/*
+
 // MARK: Section 15: Decorator Design Pattern (Structural)
 
 protocol Dress {
@@ -70,6 +175,8 @@ casualSporty.assemble()
 // Basic dress features
 // Sporty Dress Features
 // Casual Dress Features
+
+*/
 
 /*
 

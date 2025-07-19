@@ -184,3 +184,12 @@ print(myBurger.isSpicy)
   - mix and match : **여러 기능(데코레이터)을 조합해서 객체에 유연하게 기능을 추가**할 수 있다는 의미
 - 행위 추가가 쉽다.
 - 일반 상속에 비해서 유연합니다.
+
+
+
+### Section 16: FlyWeight Design Pattern (Structural)
+
+- 다수 호출되는 컴포넌트들에 의해 요구되는 많은 유사 객체들의 생성을 방지해준다.
+  - 불필요한 메모리 사용 방지, 앱 성능개선에 도움
+- FlyWeight 객체는 intrinsic, extrinsic 의 두가지 state를 가진다. (내적, 외적 상태)
+- intrinsic state는 변경되지 않는다. 
