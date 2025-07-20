@@ -1,5 +1,93 @@
 import UIKit
 
+// MARK: Section 19: Strategy Design Pattern (Behavioral)
+
+// DB에서 수행할 4가지 동작, 프로토콜에 모든 동작이 정의되어있음
+protocol DBOperations {
+    func create()
+    func update()
+    func delete()
+    func read()
+}
+
+class RemoteDB: DBOperations {
+    func create() {
+        print("Create from Remote DB")
+    }
+    
+    func update() {
+        print("Update from Remote DB")
+    }
+    
+    func delete() {
+        print("Delete from Remote DB")
+    }
+    
+    func read() {
+        print("Read from Remote DB")
+    }
+}
+
+class LocalDB: DBOperations {
+    func create() {
+        print("Create from Local DB")
+    }
+
+    func update() {
+        print("Update from Local DB")
+    }
+
+    func delete() {
+        print("Delete from Local DB")
+    }
+
+    func read() {
+        print("Read from Local DB")
+    }
+}
+
+class Storage {
+    private let database: any DBOperations
+
+    init(database: DBOperations) {
+        self.database = database
+    }
+
+    func create() {
+        database.create()
+    }
+
+    func update() {
+        database.update()
+    }
+
+    func delete() {
+        database.delete()
+    }
+
+    func read() {
+        database.read()
+    }
+}
+
+enum Environment {
+    case develop
+    case production
+}
+
+let environment: Environment = .develop
+// environment type에 따라 그에 맞게 DBOperations를 준수하는 구현체 준비
+var database: any DBOperations = (environment == .develop ? LocalDB() : RemoteDB())
+// environment type에 맞는 database를 Storage에 주입
+let storage: Storage = Storage(database: database)
+// develop environment에 맞게 DBOperations를 준수하는 LocalDB 기준으로 동작 실행
+storage.create()
+storage.update()
+storage.delete()
+storage.read()
+
+/*
+
 // MARK: Section 18: Chain of Responsibility (Behavioral)
 
 protocol Deducatable: AnyObject {
@@ -82,6 +170,8 @@ customer.deductAmount(amount: 1000000)
 // Amount deducted from Saving Account
 // Amount deducted from Fixed Account
 // Amount deducted from Current Account
+
+*/
 
 /*
 

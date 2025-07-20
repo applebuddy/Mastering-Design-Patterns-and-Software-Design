@@ -201,3 +201,11 @@ print(myBurger.isSpicy)
 - 행동 패턴 중 하나, 책임 사슬
 - 체인의 모든 클래스는 동일한 프로토콜 혹은 부모 클래스 비즈니스를 준수해야함
 - 대표적인 예로 UIResponder가 있다.
+
+
+
+### Section 18: Strategy Design Pattern (Behavioral)
+
+- 동작을 위한 다수의 알고리즘을 구현하고, 런타임에 설정에 맞는 올바른 알고리즘을 선택하게 해준다.
+  - ex) environment가 develop, production 인지에 따라 그에 맞는 구현체를 사용
+- Common protocol에 모든 알고리즘이 구현됩니다.
