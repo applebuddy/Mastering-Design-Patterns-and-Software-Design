@@ -193,3 +193,11 @@ print(myBurger.isSpicy)
   - 불필요한 메모리 사용 방지, 앱 성능개선에 도움
 - FlyWeight 객체는 intrinsic, extrinsic 의 두가지 state를 가진다. (내적, 외적 상태)
 - intrinsic state는 변경되지 않는다. 
+
+
+
+### Section 17: Chain of Responsibility (Behavioral)
+
+- 행동 패턴 중 하나, 책임 사슬
+- 체인의 모든 클래스는 동일한 프로토콜 혹은 부모 클래스 비즈니스를 준수해야함
+- 대표적인 예로 UIResponder가 있다.

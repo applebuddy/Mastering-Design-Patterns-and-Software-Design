@@ -1,5 +1,90 @@
 import UIKit
 
+// MARK: Section 18: Chain of Responsibility (Behavioral)
+
+protocol Deducatable: AnyObject {
+    var next: Deducatable? { get set }
+
+    func deduct(amount: Double)
+    static func createChain() -> Deducatable
+}
+
+extension Deducatable {
+    static func createChain() -> Deducatable {
+        let savingAccount: Deducatable = SavingAccount()
+        let fixedAccount: Deducatable = FixedAccount()
+        let currentAccount: Deducatable = CurrentAccount()
+
+        savingAccount.next = fixedAccount
+        fixedAccount.next = currentAccount
+
+        return savingAccount
+    }
+}
+
+class SavingAccount: Deducatable {
+    var next: Deducatable?
+
+    func deduct(amount: Double) {
+        // deduct 가능하면 수행하고, 안되면 next Deducatable로 넘긴다.
+        if amount <= 1000 {
+            print("Amount deducted from Saving Account")
+        } else {
+            next?.deduct(amount: amount)
+        }
+    }
+}
+
+class FixedAccount: Deducatable {
+    var next: Deducatable?
+
+    func deduct(amount: Double) {
+        if 1001.0...100000.0 ~= amount {
+            print("Amount deducted from Fixed Account")
+        } else {
+            next?.deduct(amount: amount)
+        }
+    }
+}
+
+class CurrentAccount: Deducatable {
+    var next: Deducatable?
+
+    func deduct(amount: Double) {
+        if amount > 100000 {
+            print("Amount deducted from Current Account")
+        } else {
+            next?.deduct(amount: amount)
+        }
+    }
+}
+
+class Customer {
+    var name: String
+
+    init(name: String) {
+        self.name = name
+    }
+
+    func deductAmount(amount: Double) {
+        let account: Deducatable = SavingAccount.createChain()
+        // Chain 내 객체 중, amount 에 맞는 객체가 호출
+        account.deduct(amount: amount)
+    }
+}
+
+let customer: Customer = Customer(name: "Min")
+customer.deductAmount(amount: 100)
+customer.deductAmount(amount: 10000)
+customer.deductAmount(amount: 1000000)
+
+// - Output Example
+// Amount deducted from Saving Account
+// Amount deducted from Fixed Account
+// Amount deducted from Current Account
+
+/*
+
 // MARK: Section 16: FlyWeight Design Pattern (Structural)
 
 protocol Pen {
@@ -102,6 +187,8 @@ sameYelloThickPen.draw(content: "Hello World", color: "Yellow")
 // Creating a new Pen with brush Thick and color Yellow
 // Returning the existing Pen from cache
 // Drawing content Hello World in Yellow
+
+*/
 
 /*
 
