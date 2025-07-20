@@ -209,3 +209,18 @@ print(myBurger.isSpicy)
 - 동작을 위한 다수의 알고리즘을 구현하고, 런타임에 설정에 맞는 올바른 알고리즘을 선택하게 해준다.
   - ex) environment가 develop, production 인지에 따라 그에 맞는 구현체를 사용
 - Common protocol에 모든 알고리즘이 구현됩니다.
+
+
+
+### Section 19: Template Design Pattern (Behavioral)
+
+- Template Design Pattern은 알고리즘의 스탭을 변경할 수 있다.
+- 동작에 대한 default step을 정의하고, 이후 재정렬할 수도 있다.
+- pattern 구현에 특별한 어려운 점은 없고, 쉽게 구현 가능하다.
+- ex)
+  - protocol A의 extension method로 default step 순서의 동작 메서드, make()를 정의
+  - protocol A를 채택한 구현체들에서 default step 동작이 필요하면, 기존 protocol의 extension method를 활용
+  - protocol A를 채택한 구현체들에서 다른 순서의 step 동작이 필요하면, 기존 protocol의 extension method를 재정의
+    - shadowing (기본 구현을 가리는 의미의 개념), overriding the protocol requirement (프로토콜 요구사항을 재정의하는것)으로 불림 feat. chatGPT
+
+

@@ -1,6 +1,79 @@
 import UIKit
 
-// MARK: Section 19: Strategy Design Pattern (Behavioral)
+// MARK: Section 19: Template Design Pattern (Behavioral)
+// - protocol extension method 및 shadowing 활용한 task step 설정 패턴
+
+protocol Bake {
+    func mix()
+    func boil()
+    func garnish()
+
+    func make()
+}
+
+extension Bake {
+    func make() {
+        // algorithm step을 지정
+        mix() // 섞고
+        boil() // 끓이고
+        garnish() // 장식
+    }
+}
+
+class Pizza: Bake {
+    func mix() {
+        print("Mix")
+    }
+    
+    func boil() {
+        print("Boil")
+    }
+    
+    func garnish() {
+        print("Garnish")
+    }
+}
+
+class Cake: Bake {
+    func mix() {
+        print("Mix")
+    }
+
+    func boil() {
+        print("Boil")
+    }
+
+    func garnish() {
+        print("Garnish")
+    }
+
+    // Pizza 조리법에 맞게 step을 수정 가능하다.
+    // make를 정의해서 step 수정
+    func make() {
+        boil() // 끓이고
+        mix() // 섞고
+        garnish() // 장식
+    }
+}
+
+class Restaurant {
+    func createCake() {
+        let bake: Bake = Cake()
+        bake.make()
+    }
+
+    func createPizza() {
+        let bake: Bake = Pizza()
+        bake.make()
+    }
+}
+
+let restaurant: Restaurant = Restaurant()
+restaurant.createCake()
+
+/*
+
+// MARK: Section 18: Strategy Design Pattern (Behavioral)
 
 // DB에서 수행할 4가지 동작, 프로토콜에 모든 동작이 정의되어있음
 protocol DBOperations {
@@ -86,9 +159,11 @@ storage.update()
 storage.delete()
 storage.read()
 
+*/
+
 /*
 
-// MARK: Section 18: Chain of Responsibility (Behavioral)
+// MARK: Section 17: Chain of Responsibility (Behavioral)
 
 protocol Deducatable: AnyObject {
     var next: Deducatable? { get set }
