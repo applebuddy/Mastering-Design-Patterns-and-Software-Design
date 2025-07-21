@@ -223,4 +223,10 @@ print(myBurger.isSpicy)
   - protocol A를 채택한 구현체들에서 다른 순서의 step 동작이 필요하면, 기존 protocol의 extension method를 재정의
     - shadowing (기본 구현을 가리는 의미의 개념), overriding the protocol requirement (프로토콜 요구사항을 재정의하는것)으로 불림 feat. chatGPT
 
+### Section 20: Observer Design Pattern (Behavioral)
 
+- 상태가 변경될때 Observer들에게 알림을 보냅니다.
+- 객체들이 객체의 상태변화를 구독하고, 상태가 변경되면 알림을 받습니다.
+- 알림을 등록하는 객체들은 Observers, Listeners라고 합니다.
+- ex)
+  - Subject(Teacher)는 구독한 Observer(Student)들을 갖고, 필요한 시점에 구독자들에게 이벤트를 전달

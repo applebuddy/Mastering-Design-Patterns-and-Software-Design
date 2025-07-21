@@ -1,5 +1,88 @@
 import UIKit
 
+// MARK: Section 20: Observer Design Pattern (Behavioral)
+
+protocol Observer {
+    var id: Int { get }
+    func notify(data: String)
+}
+
+protocol Subject {
+    var observers: [Observer] { get set }
+    func registerObserver(observer: any Observer)
+    func unregisterObserver(observer: any Observer)
+    func notifyAll()
+    var mobile: String { get set }
+}
+
+class Student: Observer {
+    var id: Int
+    var name: String
+
+    init(id: Int, name: String) {
+        self.id = id
+        self.name = name
+    }
+
+    func notify(data: String) {
+        print("[\(id)] The updated mobile number is \(data)")
+    }
+}
+
+class Teacher: Subject {
+    // 구독 중인 객체들
+    var observers: [any Observer] = []
+    var mobile: String {
+        didSet {
+            // mobile 상태 변경 마다, 구독자들에게 변경된 상태가 전달된다.
+            notifyAll()
+        }
+    }
+    var name: String
+
+    init(mobile: String, name: String) {
+        self.mobile = mobile
+        self.name = name
+    }
+
+    /// 옵저버 구독
+    func registerObserver(observer: any Observer) {
+        observers.append(observer)
+    }
+
+    /// 옵저버 구독해지
+    func unregisterObserver(observer: any Observer) {
+        for (index, object) in observers.enumerated()
+        where object.id == observer.id {
+            observers.remove(at: index)
+        }
+    }
+
+    /// 구독된 옵저버들에 알림 통보
+    func notifyAll() {
+        observers.forEach {
+            $0.notify(data: mobile)
+        }
+    }
+}
+
+var teacher: Subject = Teacher(mobile: "010-1234-5678", name: "Min")
+let firstStudent: Observer = Student(id: 1, name: "first student")
+let secondStudent: Observer = Student(id: 2, name: "second student")
+let thirdStudent: Observer = Student(id: 3, name: "thrid student")
+teacher.registerObserver(observer: firstStudent)
+teacher.registerObserver(observer: secondStudent)
+teacher.registerObserver(observer: thirdStudent)
+// 상태 변경 시, observer들에게 변경된 상태 전달
+teacher.mobile = "010-4321-8765"
+
+// - Output Example, 변경된 상태가 observer들에게 전달 됨
+// [1] The updated mobile number is 010-4321-8765
+// [2] The updated mobile number is 010-4321-8765
+// [3] The updated mobile number is 010-4321-8765
+
+/*
+
 // MARK: Section 19: Template Design Pattern (Behavioral)
 // - protocol extension method 및 shadowing 활용한 task step 설정 패턴
 
@@ -70,6 +153,8 @@ class Restaurant {
 
 let restaurant: Restaurant = Restaurant()
 restaurant.createCake()
+
+*/
 
 /*
 
