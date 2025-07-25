@@ -230,3 +230,14 @@ print(myBurger.isSpicy)
 - 알림을 등록하는 객체들은 Observers, Listeners라고 합니다.
 - ex)
   - Subject(Teacher)는 구독한 Observer(Student)들을 갖고, 필요한 시점에 구독자들에게 이벤트를 전달
+
+
+
+### Section 21: Mediator Design Pattern (Behavioral)
+
+- 관련 객체들관의 커뮤니케이션을 담당
+- 커플링 약화(decouple)를 위해서 interactor를 사용합니다.
+- mediator를 통해서 관련 객체들이 소통하도록 합니다.
+- ex) 
+  - controlTower는 aeroPlane, zet, chopper 객체를 참조한다. 
+  - aeroPlane의 message를 mediator인 controlTower가 zet, chopper로 전달한다.

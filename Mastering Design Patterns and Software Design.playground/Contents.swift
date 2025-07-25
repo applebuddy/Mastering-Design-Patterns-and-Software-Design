@@ -1,5 +1,111 @@
 import UIKit
 
+// MARK: Section 21: Mediator Design Pattern (Behavioral)
+
+// Mediator, 중재자는 객체 전달이 필요하기에 관련 객체들을 갖고 있어야함
+protocol Mediator {
+    var colleagues: [Colleague] { get set }
+
+    func send(message: String, id: Int)
+    func addColleague(_ colleague: Colleague)
+}
+
+// 비행기, 제트기, 헬기를 중재하는 컨트롤 타워임
+class ControlTower: Mediator {
+    var colleagues: [Colleague] = []
+
+    func send(message: String, id: Int) {
+        for colleague in colleagues
+        where colleague.id != id {
+            colleague.receive(message: message)
+        }
+    }
+    func addColleague(_ colleague: Colleague) {
+        colleagues.append(colleague)
+    }
+}
+
+protocol Colleague {
+    var id: Int { get }
+    var mediator: Mediator { get }
+
+    func send(message: String)
+    func receive(message: String)
+}
+
+// 비행기
+class AeroPlane: Colleague {
+    var id: Int
+    var mediator: Mediator
+
+    init(id: Int, mediator: Mediator) {
+        self.id = id
+        self.mediator = mediator
+    }
+
+    func send(message: String) {
+        mediator.send(message: message, id: id)
+    }
+    func receive(message: String) {
+        print("Message received from Control Towker to \(String(describing: Self.self)): \(message)")
+    }
+}
+
+// 제트기
+class Zet: Colleague {
+    var id: Int
+    var mediator: Mediator
+
+    init(id: Int, mediator: Mediator) {
+        self.id = id
+        self.mediator = mediator
+    }
+
+    func send(message: String) {
+        mediator.send(message: message, id: id)
+    }
+    func receive(message: String) {
+        print("Message received from Control Towker to \(String(describing: Self.self)): \(message)")
+    }
+}
+
+// 헬기
+class Chopper: Colleague {
+    var id: Int
+    var mediator: Mediator
+
+    init(id: Int, mediator: Mediator) {
+        self.id = id
+        self.mediator = mediator
+    }
+
+    func send(message: String) {
+        mediator.send(message: message, id: id)
+    }
+    func receive(message: String) {
+        print("Message received from Control Towker to \(String(describing: Self.self)): \(message)")
+    }
+}
+
+// mediator, 연관객체 모두 Mediator, Colleague라는 추상화에 의존하여 커플링을 완화한다. -> 유연성, 확장성 증가
+let mediator: Mediator = ControlTower()
+let aeroPlane: Colleague = AeroPlane(id: 1, mediator: mediator)
+let zet: Colleague = Zet(id: 2, mediator: mediator)
+let chopper: Colleague = Chopper(id: 3, mediator: mediator)
+
+mediator.addColleague(aeroPlane)
+mediator.addColleague(zet)
+mediator.addColleague(chopper)
+
+// aeroPlane의 message를 mediator인 controlTower가 zet, chopper로 전달한다.
+aeroPlane.send(message: "AeroPlane is going to land...")
+
+// - Output Example
+// Message received from Control Towker to Zet: AeroPlane is going to land...
+// Message received from Control Towker to Chopper: AeroPlane is going to land...
+
+/*
+
 // MARK: Section 20: Observer Design Pattern (Behavioral)
 
 protocol Observer {
@@ -80,6 +186,8 @@ teacher.mobile = "010-4321-8765"
 // [1] The updated mobile number is 010-4321-8765
 // [2] The updated mobile number is 010-4321-8765
 // [3] The updated mobile number is 010-4321-8765
+
+*/
 
 /*
 
