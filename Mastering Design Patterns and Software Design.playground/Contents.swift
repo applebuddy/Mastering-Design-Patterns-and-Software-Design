@@ -1,5 +1,108 @@
 import UIKit
 
+// MARK: Section 22: State Design Pattern (Behavioral)
+
+protocol GearState {
+    func gearUp()
+    func gearDown()
+}
+
+class FirstGear: GearState {
+    var bike: Bike
+
+    init(bike: Bike) {
+        self.bike = bike
+    }
+
+    func gearUp() {
+        // bike 클래스 인스턴스의 gearState를 변경함에 따라 bike의 gearUp, gearDown 동작이 달라진다.
+        // gearState에 새로운 GearState 인스턴스를 할당함으로서 객체 동작을 변경할 수 있다.
+        bike.gearState = SecondGear(bike: bike)
+        print("Bike moved from First gear to Second")
+    }
+
+    func gearDown() {
+        print("Bike already in First Gear")
+    }
+}
+
+class SecondGear: GearState {
+    var bike: Bike
+
+    init(bike: Bike) {
+        self.bike = bike
+    }
+
+    func gearUp() {
+        bike.gearState = ThirdGear(bike: bike)
+        print("Bike moved from Second gear to Third")
+    }
+
+    func gearDown() {
+        bike.gearState = FirstGear(bike: bike)
+    }
+}
+
+class ThirdGear: GearState {
+    var bike: Bike
+
+    init(bike: Bike) {
+        self.bike = bike
+    }
+
+    func gearUp() {
+        bike.gearState = FourthGear(bike: bike)
+        print("Bike moved from Third gear to Fourth")
+    }
+
+    func gearDown() {
+        bike.gearState = SecondGear(bike: bike)
+    }
+}
+
+class FourthGear: GearState {
+    var bike: Bike
+
+    init(bike: Bike) {
+        self.bike = bike
+    }
+
+    func gearUp() {
+        print("Bike already in Fourth Gear")
+    }
+
+    func gearDown() {
+        bike.gearState = ThirdGear(bike: bike)
+    }
+}
+
+class Bike {
+    // gearState에 첫 접근할때, FirstGear로 초기화 됩니다.
+    lazy var gearState: GearState = {
+        return FirstGear(bike: self)
+    }()
+
+    init() {
+
+    }
+
+    func gearUp() {
+        gearState.gearUp()
+    }
+
+    func gearDown() {
+        gearState.gearDown()
+    }
+}
+
+// State Design Pattern : 내부 상태가 변경될때마다 동작을 변경할 수 있습니다.
+let bike: Bike = .init()
+bike.gearUp() // gearState first -> second
+bike.gearUp() // gearState second -> third
+bike.gearUp() // gearState third -> fourth
+
+/*
+
 // MARK: Section 21: Mediator Design Pattern (Behavioral)
 
 // Mediator, 중재자는 객체 전달이 필요하기에 관련 객체들을 갖고 있어야함
@@ -103,6 +206,8 @@ aeroPlane.send(message: "AeroPlane is going to land...")
 // - Output Example
 // Message received from Control Towker to Zet: AeroPlane is going to land...
 // Message received from Control Towker to Chopper: AeroPlane is going to land...
+
+*/
 
 /*
 

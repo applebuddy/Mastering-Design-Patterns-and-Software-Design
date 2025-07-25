@@ -3,7 +3,7 @@ Mastering Design Patterns and Software Design
 
 
 
-- Design Pattern : 소프트웨어 설계 및 개발에서 직면하는 일반적 문제들에 적용 가능한 재사용가능한 해결책
+- Design Pattern : 소프트웨어 설계 및 개발에서 직면하는 일반적 문제들에 적용 가능한 재사용가능한 해결책, 설계 방식
 - creational, structural, behavioral design pattern 세가지로 분류할 수 있다.
   - creational : singleton pattern
   - structural : proxy pattern
@@ -241,3 +241,14 @@ print(myBurger.isSpicy)
 - ex) 
   - controlTower는 aeroPlane, zet, chopper 객체를 참조한다. 
   - aeroPlane의 message를 mediator인 controlTower가 zet, chopper로 전달한다.
+
+
+
+### Section 22: State Design Pattern (Behavioral)
+
+- 내부 상태가 변경되면 객체 행위를 변경한다.
+- 객체 행위를 변경하는 새로운 인스턴스 할당으로 객체의 내부 상태를 변경한다.
+- 런타임에 객체 행위 변경이 가능하며 유연함
+- ex) 
+  - Bike class 내에 GearState가 존재, GearState에 할당되는 구현체 타입에 따라 행위가 변경
+  - GearState(gearUp, gearDown method 정의)를 준수하는 FirstGear, SecondGear, ThirdGear, FourthGear가 상황에 따라 할당되고, 그에 맞게 동작이 변경
