@@ -1,5 +1,137 @@
 import UIKit
 
+// MARK: Section 23: Visitor Design Pattern (Behavioral)
+
+protocol Visitor {
+    func visit(shape: Circle)
+    func visit(shape: Rectangle)
+    func visit(shape: Square)
+}
+
+// 모든 shape들은 AreaVisitor를 방문하고, totalArea를 누적시킨다.
+class AreaVisitor: Visitor {
+    var totalArea: Double = 0.0
+    
+    func visit(shape: Circle) {
+        totalArea += .pi * shape.radius * shape.radius
+    }
+    
+    func visit(shape: Rectangle) {
+        totalArea += shape.length * shape.breadth
+    }
+
+    func visit(shape: Square) {
+        totalArea += shape.length * shape.length
+    }
+}
+
+protocol Shape {
+    func accept(visitor: Visitor)
+}
+
+class Circle: Shape {
+    var radius: Double
+
+    init(radius: Double) {
+        self.radius = radius
+    }
+
+    func accept(visitor: any Visitor) {
+        visitor.visit(shape: self)
+    }
+}
+
+class Rectangle: Shape {
+    var length: Double
+    var breadth: Double
+
+    init(length: Double, breadth: Double) {
+        self.length = length
+        self.breadth = breadth
+    }
+
+    func accept(visitor: any Visitor) {
+        visitor.visit(shape: self)
+    }
+}
+
+class Square: Shape {
+    var length: Double
+
+    init(length: Double) {
+        self.length = length
+    }
+
+    func accept(visitor: any Visitor) {
+        visitor.visit(shape: self)
+    }
+}
+
+// 1) 추상화 없이 사용하는 예
+class BadShapeCollection {
+    var shapes: [Any] = []
+
+    init(shapes: [Any]) {
+        self.shapes = shapes
+    }
+
+    func calculateTotalArea() -> Double {
+        var totalArea: Double = 0.0
+
+        for shape in shapes {
+            // concrete type이 생길때마다 아래와 같은 로직이 추가되어야하는 단점 존재 -> 버그가 발생하기 쉽고, 유지보수에 취약하다.
+            // -> 타입의 공통 속성을 protocol로 추상화 고려 필요
+            if let shape = shape as? Circle {
+                totalArea += Double.pi * pow(shape.radius, 2)
+            }
+
+            if let shape = shape as? Rectangle {
+                totalArea += shape.length * shape.breadth
+            }
+
+            if let shape = shape as? Square {
+                totalArea += pow(shape.length, 2)
+            }
+        }
+
+        return totalArea
+    }
+}
+
+let badShapeCollection: BadShapeCollection = .init(shapes: [
+    Circle(radius: 5), Square(length: 10), Rectangle(length: 6, breadth: 3)
+])
+print("badShapeCollection.calculateTotalArea() : \(badShapeCollection.calculateTotalArea())")
+
+// 2) 추상화 적용하여 사용하는 예
+class ShapeCollection {
+    var shapes: [any Shape] = []
+
+    init(shapes: [any Shape]) {
+        self.shapes = shapes
+    }
+
+    func accept(visitor: any Visitor) {
+        // 각 shape 별 visitor를 수용, visitor는 totalArea값
+        for shape in shapes {
+            shape.accept(visitor: visitor)
+        }
+    }
+}
+
+let shapeCollection: ShapeCollection = .init(shapes: [
+    Circle(radius: 5), Square(length: 10), Rectangle(length: 6, breadth: 3)
+])
+let areaVisitor: AreaVisitor = .init()
+shapeCollection.accept(visitor: areaVisitor)
+print("areaVisitor.totalArea : \(areaVisitor.totalArea)")
+
+// - Output Example
+// badShapeCollection.calculateTotalArea() : 196.53981633974485
+// areaVisitor.totalArea : 196.53981633974485
+
+/*
+
 // MARK: Section 22: State Design Pattern (Behavioral)
 
 protocol GearState {
@@ -100,6 +232,8 @@ let bike: Bike = .init()
 bike.gearUp() // gearState first -> second
 bike.gearUp() // gearState second -> third
 bike.gearUp() // gearState third -> fourth
+
+*/
 
 /*
 

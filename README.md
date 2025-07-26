@@ -252,3 +252,13 @@ print(myBurger.isSpicy)
 - ex) 
   - Bike class 내에 GearState가 존재, GearState에 할당되는 구현체 타입에 따라 행위가 변경
   - GearState(gearUp, gearDown method 정의)를 준수하는 FirstGear, SecondGear, ThirdGear, FourthGear가 상황에 따라 할당되고, 그에 맞게 동작이 변경
+
+
+
+### Section 23: Visitor Design Pattern (Behavioral)
+
+- 다른 객체들의 컬렉션 상에서 동작하며 이를 위한 uniform API 제공
+- Visitor Design Pattern의 이점
+  - 클래스 간의 커플링 완화
+  - testability, 유지보수성 향상
+- ex) Shape 프로토콜을 준수하는 Rectangle, Square, Circle이 존재, 이 객체들을 관리하는 ShapeCollection, ShapeCollection은 계산 시에 각 Shape들에 대해 AreaVisitor을 방문하며 전체 넓이 등의 계산을 수행
